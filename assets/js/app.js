@@ -3,7 +3,9 @@
 $('#start').on('click', function() {
     // Remove start button when game starts
     $('#start').remove();
-})
+    // load question after game starts
+    game.loadQuestion();
+});
 
 
 // Game questions
@@ -59,6 +61,72 @@ var questions = [{
     correctAnswer: 'Brendan Eich',
     image: 'assets/images/jsimg.jpg'
 }];
+
+
+// Set up Game object
+
+var game = {
+    // list of game questions
+    questions:questions,
+    // to keep track of which question is on so I know the correct question is posted to the page
+    currentQuestion:0,
+    // game timer
+    counter:30,
+    // to keep track of how many correct answers
+    correct:0,
+    // to keep track of how many incorrect answers
+    incorrect:0,
+    // incharge of changing the timer
+    countdown: function () {
+        game.counter--;
+        $('#counter').html(game.counter);
+        if(game.counter <= 0) {
+            console.log('TIME UP!');
+            game.timeUp();
+        }
+    },
+    // load question to page
+    loadQuestion: function () {
+        // set the timer to start decreasing by one second as the question loads
+        timer = setInterval(game.countdown,1000);
+        // post current question to the page
+        $('#subwrapper').html('<h2>' + questions[game.currentQuestion].question + '</h2>');
+        // post answer to the page by looping through answers and append to page
+        for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
+            $('#subwrapper').append('<button class="answer-button" id="button-' + i + ' " data-name="' + questions[game.currentQuestion].answers[i] + ' " > ' + questions[game.currentQuestion].answers[i] + '</button>');
+        }
+    },
+
+    nextQuestion: function () {
+
+    },
+
+    timeUp: function () {
+
+    },
+
+    results: function () {
+
+    },
+
+    clicked: function () {
+
+    },
+    
+    answeredCorrectly: function () {
+        
+    },
+
+    answeredIncorrectly: function () {
+
+    },
+    
+    reset: function () {
+        
+    }
+}
+
+
 
 
 
