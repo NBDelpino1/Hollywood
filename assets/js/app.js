@@ -104,8 +104,15 @@ var game = {
 
     },
 
+    // set counter back to origin to there is a fresh 30 seconds to answer the new question
+    //update html with new time
+    // load next question (make sure not to load same question)
     nextQuestion: function () {
 
+        game.counter = 30;
+        $('#counter').html(game.counter);
+        game.currentQuestion++;
+        game.loadQuestion()
     },
 
     timeUp: function () {
