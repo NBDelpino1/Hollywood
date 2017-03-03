@@ -115,8 +115,19 @@ var game = {
         game.loadQuestion()
     },
 
+    // stop timer so it doesnt start going into negative
+    // alert user that they have run out of time
+    // let user know what the correct answer was
+    // if final question go to the results screen if not go to the end
     timeUp: function () {
-
+        clearInterval(timer);
+        $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
+        $('#subwrapper').append('<h3>THE CORRECT ANSWER WAS: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
+        if(game.currentQuestion == questions.length -1) {
+            setTimeout(game.results, 3 * 1000);
+        } else {
+            setTimeout(game.nextQuestion, 3 * 1000)
+        }
     },
 
     results: function () {
@@ -152,11 +163,13 @@ var game = {
         }
     },
     // can use the same logic as answered correctly just edit variable name and statement
+    // let user know what the correct answer was
     answeredIncorrectly: function () {
         console.log('WRONG :(');
         clearInterval(timer);
         game.incorrect ++;
         $('#subwrapper').html('<h2>YOU GOT IT WRONG!</h2>');
+        $('#subwrapper').append('<h3>THE CORRECT ANSWER WAS: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
         if(game.currentQuestion == questions.length -1) {
             setTimeout(game.results, 3 * 1000);
         } else {
