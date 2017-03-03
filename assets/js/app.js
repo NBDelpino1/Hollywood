@@ -104,12 +104,11 @@ var game = {
     loadQuestion: function () {
 
         timer = setInterval(game.countdown,1000);
-        $('#subwrapper').html('<h2 id="counter"></h2>');
+        $('#subwrapper').html('<h2>TIME REMAINING <span id="counter">30</span><span> SECONDS</span></h2>');
         $('#subwrapper').append('<h2>' + questions[game.currentQuestion].question + '</h2>');
         for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
             $('#subwrapper').append('<button class="answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
         }
-
     },
 
     // set counter back to origin to there is a fresh 30 seconds to answer the new question
@@ -120,7 +119,7 @@ var game = {
         game.counter = 30;
         $('#counter').html(game.counter);
         game.currentQuestion++;
-        game.loadQuestion()
+        game.loadQuestion();
     },
 
     // stop timer so it doesn't start going into negative
@@ -134,9 +133,9 @@ var game = {
         $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
         $('#subwrapper').append('<h3>THE CORRECT ANSWER WAS: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
         if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 3 * 1000);
+            setTimeout(game.results, 1 * 1000);
         } else {
-            setTimeout(game.nextQuestion, 3 * 1000)
+            setTimeout(game.nextQuestion, 1 * 1000);
         }
     },
 
@@ -150,7 +149,7 @@ var game = {
         $('#subwrapper').append('<h3>CORRECT: </h3>' + game.correct);
         $('#subwrapper').append('<h3>INCORRECT: </h3>' + game.incorrect);
         $('#subwrapper').append('<h3>UNANSWERED: </h3>' + game.unanswered);
-        $('#subwrapper').append('<button id="reset"></button>');
+        $('#subwrapper').append('<button id="reset">RESTART GAME</button>');
     },
 
     // clear interval / stop timer after button clicked
@@ -176,9 +175,9 @@ var game = {
         game.correct ++;
         $('#subwrapper').html('<h2>YOU GOT IT CORRECT!</h2>');
         if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 3 * 1000);
+            setTimeout(game.results, 1 * 1000);
         } else {
-            setTimeout(game.nextQuestion, 3 * 1000)
+            setTimeout(game.nextQuestion, 1 * 1000)
         }
     },
     // can use the same logic as answered correctly just edit variable name and statement
@@ -190,9 +189,9 @@ var game = {
         $('#subwrapper').html('<h2>YOU GOT IT WRONG!</h2>');
         $('#subwrapper').append('<h3>THE CORRECT ANSWER WAS: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
         if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 3 * 1000);
+            setTimeout(game.results, 1 * 1000);
         } else {
-            setTimeout(game.nextQuestion, 3 * 1000)
+            setTimeout(game.nextQuestion, 1 * 1000)
         }
     },
 
