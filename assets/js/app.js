@@ -12,7 +12,12 @@ $('#start').on('click', function() {
 // Pass the value of the button clicked through 'e'
 $(document).on('click', '.answer-button', function(e) {
    game.clicked(e);
-})
+});
+
+// rest game
+$(document).on('click', '#reset', function() {
+    game.reset();
+});
 
 // Game questions
 
@@ -137,12 +142,14 @@ var game = {
     // load after results after last question
     // clear timer
     // advise user they are done and what their score was
+    // append button so user can restart game if they choose
     results: function () {
         clearInterval(timer);
         $('#subwrapper').html('<h2>ALL DONE!</h2>');
         $('#subwrapper').append('<h3>CORRECT: </h3>' + game.correct);
         $('#subwrapper').append('<h3>INCORRECT: </h3>' + game.incorrect);
         $('#subwrapper').append('<h3>UNANSWERED: </h3>' + game.unanswered);
+        $('#subwrapper').append('<button id="reset"></button>');
     },
 
     // clear interval / stop timer after button clicked
@@ -187,9 +194,15 @@ var game = {
             setTimeout(game.nextQuestion, 3 * 1000)
         }
     },
-    
+
+    // set everything back to the original amounts when user restarts game
     reset: function () {
-        
+        game.currentQuestion = 0;
+        game.counter = 0;
+        game.correct = 0;
+        game.incorrect = 0;
+        game.unanswered = 0;
+        game.loadQuestion();
     }
 };
 
