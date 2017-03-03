@@ -82,6 +82,8 @@ var game = {
     correct:0,
     // to keep track of how many incorrect answers
     incorrect:0,
+// to keep track of unanswered questions
+    unanswered: 0,
     // incharge of changing the timer
     countdown: function () {
         game.counter--;
@@ -115,12 +117,14 @@ var game = {
         game.loadQuestion()
     },
 
-    // stop timer so it doesnt start going into negative
+    // stop timer so it doesn't start going into negative
+    // increase the amt of unanswered questions
     // alert user that they have run out of time
     // let user know what the correct answer was
     // if final question go to the results screen if not go to the end
     timeUp: function () {
         clearInterval(timer);
+        game.unanswered ++;
         $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
         $('#subwrapper').append('<h3>THE CORRECT ANSWER WAS: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
         if(game.currentQuestion == questions.length -1) {
@@ -130,8 +134,15 @@ var game = {
         }
     },
 
+    // load after results after last question
+    // clear timer
+    // advise user they are done and what their score was
     results: function () {
-
+        clearInterval(timer);
+        $('#subwrapper').html('<h2>ALL DONE!</h2>');
+        $('#subwrapper').append('<h3>CORRECT: </h3>' + game.correct);
+        $('#subwrapper').append('<h3>INCORRECT: </h3>' + game.incorrect);
+        $('#subwrapper').append('<h3>UNANSWERED: </h3>' + game.unanswered);
     },
 
     // clear interval / stop timer after button clicked
