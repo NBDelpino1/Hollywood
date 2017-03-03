@@ -7,6 +7,12 @@ $('#start').on('click', function() {
     game.loadQuestion();
 });
 
+// Check to see if answer user selected is correct or incorrect
+// Don't check answer button because it will dynamically loaded so wont exist initially on page, instead check the document
+// Pass the value of the button clicked through 'e'
+$(document).on('click', '.answer-button', function(e) {
+   game.clicked(e);
+})
 
 // Game questions
 
@@ -85,16 +91,17 @@ var game = {
             game.timeUp();
         }
     },
-    // load question to page
+
+    // set the timer to start decreasing as the question loads
+    // post current question to the page
     loadQuestion: function () {
-        // set the timer to start decreasing by one second as the question loads
+
         timer = setInterval(game.countdown,1000);
-        // post current question to the page
         $('#subwrapper').html('<h2>' + questions[game.currentQuestion].question + '</h2>');
-        // post answer to the page by looping through answers and append to page
         for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
-            $('#subwrapper').append('<button class="answer-button" id="button-' + i + ' " data-name="' + questions[game.currentQuestion].answers[i] + ' " > ' + questions[game.currentQuestion].answers[i] + '</button>');
+            $('#subwrapper').append('<button class="answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
         }
+
     },
 
     nextQuestion: function () {
@@ -109,22 +116,51 @@ var game = {
 
     },
 
-    clicked: function () {
+    // clear interval / stop timer after button clicked
+    // pass in what is being clicked, compare it to the correct answer and do something
+    clicked: function(e) {
 
+        clearInterval(timer);
+        if($(e.target).data('name') == questions[game.currentQuestion].correctAnswer) {
+            game.answeredCorrectly();
+        } else {
+            game.answeredIncorrectly();
+        }
     },
-    
+
+    // test to make sure data was passed and comparison ok
+    // clear timer
+    // increase number of correct answers
+    // advise user they got it correct
+    // add something that either takes user to the results screen if game over or move to the next question
     answeredCorrectly: function () {
-        
+        console.log('YOU GOT IT!');
+        clearInterval(timer);
+        game.correct ++;
+        $('#subwrapper').html('<h2>YOU GOT IT CORRECT!</h2>');
+        if(game.currentQuestion == questions.length -1) {
+            setTimeout(game.results, 3 * 1000);
+        } else {
+            setTimeout(game.nextQuestion, 3 * 1000)
+        }
     },
-
+    // can use the same logic as answered correctly just edit variable name and statement
     answeredIncorrectly: function () {
-
+        console.log('WRONG :(');
+        clearInterval(timer);
+        game.incorrect ++;
+        $('#subwrapper').html('<h2>YOU GOT IT WRONG!</h2>');
+        if(game.currentQuestion == questions.length -1) {
+            setTimeout(game.results, 3 * 1000);
+        } else {
+            setTimeout(game.nextQuestion, 3 * 1000)
+        }
     },
     
     reset: function () {
         
     }
-}
+};
 
 
 
