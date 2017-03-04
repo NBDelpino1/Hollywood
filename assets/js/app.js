@@ -7,17 +7,22 @@ $('#start').on('click', function() {
     game.loadQuestion();
 });
 
+
 // Check to see if answer user selected is correct or incorrect
 // Don't check answer button because it will dynamically loaded so wont exist initially on page, instead check the document
 // Pass the value of the button clicked through 'e'
+
+
 $(document).on('click', '.answer-button', function(e) {
    game.clicked(e);
 });
 
-// rest game
+
+// reset game
 $(document).on('click', '#reset', function() {
     game.reset();
 });
+
 
 // Game questions
 
