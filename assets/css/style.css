@@ -87,8 +87,12 @@ h1 {
     margin-bottom:40px;
 }
 
-.glyphicon {
+.glyphicon-ok {
     font-size:50px;
+    color: #8bc34a;
 }
 
-
+.glyphicon-remove {
+    font-size:50px;
+    color: #f44336;
+}

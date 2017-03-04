@@ -22,55 +22,45 @@ $(document).on('click', '#reset', function() {
 // Game questions
 
 var questions = [{
-    question: 'What is mean by "this" keyword in javascript?',
-    answers: ['It refers current object', 'It refers previous object', 'It is variable which contains value', 'None of the above'],
-    correctAnswer: 'It refers current object',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Which island nation is popstar Rihanna from?',
+    answers: ['Aruba', 'Barbados', 'Bahamas', 'Jamaica'],
+    correctAnswer: 'Barbados'
 }, {
-    question: 'Math. round(-20.51)=?',
-    answers: ['20', '-21', '19', 'None'],
-    correctAnswer: '-21',
-    image: 'assets/images/jsimg.jpg'
+    question: 'What is Natalie Portman\'s actual last name?',
+    answers: ['Hershlag', 'Douglas', 'Horowitz', 'Portman'],
+    correctAnswer: 'Hershlag'
 }, {
-    question: 'parseFloat(9+10)=?',
-    answers: ['19', '-910', '20', 'None'],
-    correctAnswer: 'None',
-    image: 'assets/images/jsimg.jpg'
+    question: 'In what year did Angelina Jolie and Brad Pitt get together?',
+    answers: ['2004', '2005', '2006', '2007'],
+    correctAnswer: '2005'
 }, {
-    question: 'parseFloat(9+10)=?',
-    answers: ['19', '-910', '20', 'None'],
-    correctAnswer: 'None',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Who was the first person to have a No. 1 album and a No. 1 film in the same week?',
+    answers: ['Beyoncé', 'Will Smith', 'Jennifer Lopez', 'Justin Timberlake'],
+    correctAnswer: 'Jennifer Lopez'
 }, {
-    question: 'How do you create a new object in JavaScript?',
-    answers: ['var obj = {}', 'var obj = Object()', 'var obj=new {}', 'None of the above'],
-    correctAnswer: 'var obj = {}',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Which NBA star did actor Gabrielle Union marry?',
+    answers: ['Dwyane Wade', 'LeBron James', 'Kobe Bryant', 'Chris Bosh'],
+    correctAnswer: 'Dwyane Wade'
 }, {
-    question: 'In Javascript, Which of the following method is used to find out the character at a position in a string?',
-    answers: ['charAt()', 'CharacterAt()', 'CharPos()', 'characAt()'],
-    correctAnswer: 'charAt()',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Who\'s the youngest Kardashian?',
+    answers: ['Kendall', 'Khloe', 'Kylie', 'Rob'],
+    correctAnswer: 'Rob'
 }, {
-    question: 'What are the following looping structures are available in javascripts?',
-    answers: ['for,forecach', 'foreach,whileloop', 'do-while loop,foreach', 'for , while loop'],
-    correctAnswer: 'for , while loop',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Katy Perry is a California girl. But do you know WHICH city she\'s from?',
+    answers: ['Santa Barbara', 'Santa Cruz', 'San Francisco', 'Los Angeles'],
+    correctAnswer: 'Santa Barbara'
 }, {
-    question: 'What are the following looping structures are available in javascripts?',
-    answers: ['for,forecach', 'foreach,whileloop', 'do-while loop,foreach', 'for , while loop'],
-    correctAnswer: 'for , while loop',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Meryl Streep, Shaquille O\'Neal, and Whitney Houston are all from which state?',
+    answers: ['Indiana', 'New York', 'California', 'New Jersey'],
+    correctAnswer: 'New Jersey'
 }, {
-    question: 'In Javascript, What does isNaN function do ?',
-    answers: ['Return true if the argument is not a number', 'Return false if the argument is not a number', 'Return true if the argument is a number', 'None of the above'],
-    correctAnswer: 'Return true if the argument is not a number',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Do you know which child star Mila Kunis dated for eight years?',
+    answers: ['Ben Savage', 'Jonathan Lipnicki', 'Macaulay Culkin', 'Jonathan Lipnicki'],
+    correctAnswer: 'Macaulay Culkin'
 }, {
-    question: 'Who invented the javascript programming language?',
-    answers: ['Tennis Ritchie', 'James Gosling', 'Brendan Eich', 'Bill Gates'],
-    correctAnswer: 'Brendan Eich',
-    image: 'assets/images/jsimg.jpg'
+    question: 'Which one of these beautiful ladies he HASN\'T dated?',
+    answers: ['Miranda Kerr', 'Blake Lively', 'Gisele Bündchen', 'Bar Refaeli'],
+    correctAnswer: 'Gisele Bündchen'
 }];
 
 
@@ -184,7 +174,7 @@ var game = {
     // test to make sure data was passed and comparison ok
     // clear timer
     // increase number of correct answers
-    // advise user they got it correct
+    // advise user they got it correct (pause for a sec)
     // add something that either takes user to the results screen if game over or move to the next question
 
 
@@ -202,7 +192,7 @@ var game = {
 
 
     // can use the same logic as answered correctly just edit variable name and statement
-    // let user know what the correct answer was
+    // let user know what the correct answer was (pause for a sec)
 
 
     answeredIncorrectly: function () {
