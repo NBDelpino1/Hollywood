@@ -104,10 +104,13 @@ var game = {
     loadQuestion: function () {
 
         timer = setInterval(game.countdown,1000);
-        $('#subwrapper').html('<h2>TIME REMAINING <span id="counter">30</span><span> SECONDS</span></h2>');
-        $('#subwrapper').append('<h2>' + questions[game.currentQuestion].question + '</h2>');
+        $('#subwrapper').html('<h2 class="timer">Time Remaining: <span id="counter">30</span><span> sec</span></h2>');
+        (function blink() {
+            $('.timer').fadeOut(515).fadeIn(515, blink);
+        })();
+        $('#subwrapper').append('<h3 class="display-question">' + questions[game.currentQuestion].question + '</h3>');
         for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
-            $('#subwrapper').append('<button class="answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
+            $('#subwrapper').append('<button class="btn btn-lg btn-default answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
         }
     },
 
@@ -130,8 +133,8 @@ var game = {
     timeUp: function () {
         clearInterval(timer);
         game.unanswered ++;
-        $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
-        $('#subwrapper').append('<h3>THE CORRECT ANSWER WAS: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
+        $('#subwrapper').html('<h2 class="display-out-of-time">OUT OF TIME!</h2>');
+        $('#subwrapper').append('<h3>The correct answer was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
         if(game.currentQuestion == questions.length -1) {
             setTimeout(game.results, 1 * 1000);
         } else {
