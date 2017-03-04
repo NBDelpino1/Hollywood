@@ -11,19 +11,19 @@ h1 {
 }
 
 /* set background image and tint */
-/*.main-wrapper {*/
-    /*background:*/
-            /*linear-gradient(*/
-                    /*rgba(205, 220, 57, 1),*/
-                    /*rgba(0, 0, 0, 0.86)*/
-            /*),*/
-            /*url(../images/page-bg.jpg) no-repeat center center scroll;*/
-    /*-webkit-background-size: cover;*/
-    /*-moz-background-size: cover;*/
-    /*background-size: cover;*/
-    /*-o-background-size: cover;*/
-    /*height:100%;*/
-/*}*/
+.main-wrapper {
+    background:
+            linear-gradient(
+                    rgba(205, 220, 57, 1),
+                    rgba(0, 0, 0, 0.86)
+            ),
+            url(../images/page-bg.jpg) no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height:100%;
+}
 
 /* center content on home page */
 .sub-wrapper {
@@ -99,18 +99,5 @@ h1 {
 
 
 
-.main-wrapper {
-    background:
-            linear-gradient(
-                    rgba(205, 220, 57, 1),
-                    rgba(0, 0, 0, 0.86)
-            ),
-            url(../images/page-bg.jpg) no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    height:100%;
-}
 
 

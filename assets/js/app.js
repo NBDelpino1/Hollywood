@@ -63,7 +63,7 @@ var questions = [{
     answers: ['Ben Savage', 'Jonathan Lipnicki', 'Macaulay Culkin', 'Jonathan Lipnicki'],
     correctAnswer: 'Macaulay Culkin'
 }, {
-    question: 'Which one of these beautiful ladies he HASN\'T dated?',
+    question: 'Which one of these beautiful ladies Leonardo Dicaprio HASN\'T dated?',
     answers: ['Miranda Kerr', 'Blake Lively', 'Gisele Bündchen', 'Bar Refaeli'],
     correctAnswer: 'Gisele Bündchen'
 }];
