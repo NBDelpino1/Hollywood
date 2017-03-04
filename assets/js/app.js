@@ -165,6 +165,8 @@ var game = {
 
     // clear interval / stop timer after button clicked
     // pass in what is being clicked, compare it to the correct answer and do something
+
+
     clicked: function(e) {
 
         clearInterval(timer);
@@ -226,12 +228,3 @@ var game = {
         game.loadQuestion();
     }
 };
-
-
-
-
-
-
-
-
-
