@@ -64,7 +64,20 @@ h1 {
     line-height:41px;
 }
 
-.answer-button:hover {
+.reset-button {
+    margin:5px;
+    width:220px;
+    border-radius:0;
+    background-color:#8bc34a;
+    border-color: #8bc34a;
+    color: #fff;
+    font-size:20px;
+    font-weight:300;
+    letter-spacing:-1px;
+    line-height:41px;
+}
+
+.reset-button:hover {
     background-color:#f44336;
     border-color: #f44336;
 }
@@ -74,7 +87,8 @@ h1 {
     margin-bottom:40px;
 }
 
-.display-out-of-time {
-    color: #f44336;
+.glyphicon {
+    font-size:50px;
 }
+
 
