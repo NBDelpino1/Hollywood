@@ -98,7 +98,7 @@ var game = {
         $('#subwrapper').html('<h2 class="timer">Time Remaining: <span id="counter">30</span><span> sec</span></h2>');
         $('#subwrapper').append('<h3 class="question-text">' + questions[game.currentQuestion].question + '</h3>');
         for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
-            $('#subwrapper').append('<button class="btn btn-lg btn-success answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
+            $('#subwrapper').append('<button class="btn btn-lg btn-default answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
         }
         (function blink() {
             $('.timer').fadeOut(515).fadeIn(515, blink);
@@ -145,7 +145,7 @@ var game = {
         $('#subwrapper').append('<h3>Correct: ' + game.correct + '</h3>');
         $('#subwrapper').append('<h3>Incorrect: ' + game.incorrect + '</h3>');
         $('#subwrapper').append('<h3>Unanswered: ' + game.unanswered + '</h3>');
-        $('#subwrapper').append('<button class="btn btn-lg btn-success reset-button" id="reset">Restart Game</button>');
+        $('#subwrapper').append('<button class="btn btn-lg btn-default reset-button" id="reset">Restart Game</button>');
     },
 
     // clear interval / stop timer after button clicked
