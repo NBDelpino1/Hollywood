@@ -15,7 +15,7 @@ h1 {
     background:
             linear-gradient(
                     rgba(205, 220, 57, 1),
-                    rgba(0, 0, 0, 0.86)
+                    rgba(0, 0, 0, 0.96)
             ),
             url(../images/page-bg.jpg) no-repeat center center scroll;
     -webkit-background-size: cover;
@@ -52,7 +52,6 @@ h1 {
     background-color:#8bc34a;
     border-color: #8bc34a;
     color: #fff;
-    /*font-size:20px;*/
     font-weight:300;
     letter-spacing:-1px;
     line-height:41px;
