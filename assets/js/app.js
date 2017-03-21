@@ -15,7 +15,6 @@ $(document).on('click', '.answer-button', function(e) {
    game.clicked(e);
 });
 
-
 // reset game
 
 $(document).on('click', '#reset', function() {
@@ -173,9 +172,9 @@ var game = {
         game.correct ++;
         $('#subwrapper').html('<span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h2>YOU GOT IT CORRECT!</h2>');
         if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 1 * 1000);
+            setTimeout(game.results, 1 * 1500);
         } else {
-            setTimeout(game.nextQuestion, 1 * 1000)
+            setTimeout(game.nextQuestion, 1 * 1500)
         }
     },
 
@@ -188,10 +187,11 @@ var game = {
         game.incorrect ++;
         $('#subwrapper').html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span><h2>OOPS INCORRECT</h2>');
         $('#subwrapper').append('<h3>Correct answer was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
+
         if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 1 * 1000);
+            setTimeout(game.results, 1 * 1500);
         } else {
-            setTimeout(game.nextQuestion, 1 * 1000)
+            setTimeout(game.nextQuestion, 1 * 1500)
         }
     },
 
