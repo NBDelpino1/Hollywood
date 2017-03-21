@@ -35,12 +35,14 @@ h1 {
 }
 
 .start-button {
+    background-color:#8bc34a;
+    border-color: #8bc34a;
     width:175px;
     height:50px;
     margin:5px;
     border-radius:0;
-    font-size:13px;
-    line-height:30px;
+    font-size:14px;
+    line-height:25px;
 }
 
 .answer-button {
@@ -50,31 +52,24 @@ h1 {
     background-color:#8bc34a;
     border-color: #8bc34a;
     color: #fff;
-    font-size:20px;
+    /*font-size:20px;*/
     font-weight:300;
     letter-spacing:-1px;
     line-height:41px;
 }
 
 .reset-button {
-    margin:5px;
-    width:220px;
-    border-radius:0;
     background-color:#8bc34a;
     border-color: #8bc34a;
-    color: #fff;
-    font-size:20px;
-    font-weight:300;
-    letter-spacing:-1px;
-    line-height:41px;
+    width:175px;
+    height:50px;
+    margin:5px;
+    border-radius:0;
+    font-size:14px;
+    line-height:25px;
 }
 
-.reset-button:hover {
-    background-color:#f44336;
-    border-color: #f44336;
-}
-
-.display-question {
+.question-text {
     margin-top:40px;
     margin-bottom:40px;
 }

@@ -7,11 +7,9 @@ $('#start').on('click', function() {
     game.loadQuestion();
 });
 
-
 // Check to see if answer user selected is correct or incorrect
 // Don't check answer button because it will dynamically loaded so wont exist initially on page, instead check the document
 // Pass the value of the button clicked through 'e'
-
 
 $(document).on('click', '.answer-button', function(e) {
    game.clicked(e);
@@ -19,10 +17,10 @@ $(document).on('click', '.answer-button', function(e) {
 
 
 // reset game
+
 $(document).on('click', '#reset', function() {
     game.reset();
 });
-
 
 // Game questions
 
@@ -68,7 +66,6 @@ var questions = [{
     correctAnswer: 'Gisele Bündchen'
 }];
 
-
 // Set up Game object
 
 var game = {
@@ -85,8 +82,8 @@ var game = {
     // to keep track of unanswered questions
     unanswered: 0,
     // incharge of changing the timer
-    countdown: function () {
-        game.counter--;
+    countdown: function() {
+        game.counter --;
         $('#counter').html(game.counter);
         if(game.counter <= 0) {
             console.log('TIME UP!');
@@ -94,38 +91,31 @@ var game = {
         }
     },
 
-
     // set the timer to start decreasing as the question loads
     // post current question to the page
 
-
-    loadQuestion: function () {
-
+    loadQuestion: function() {
         timer = setInterval(game.countdown,1000);
         $('#subwrapper').html('<h2 class="timer">Time Remaining: <span id="counter">30</span><span> sec</span></h2>');
-        $('#subwrapper').append('<h3 class="display-question">' + questions[game.currentQuestion].question + '</h3>');
+        $('#subwrapper').append('<h3 class="question-text">' + questions[game.currentQuestion].question + '</h3>');
         for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
-            $('#subwrapper').append('<button class="btn btn-lg btn-default answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
+            $('#subwrapper').append('<button class="btn btn-lg btn-success answer-button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</button>')
         }
         (function blink() {
             $('.timer').fadeOut(515).fadeIn(515, blink);
         })();
     },
 
-
     // set counter back to origin to there is a fresh 30 seconds to answer the new question
     //update html with new time
     // load next question (make sure not to load same question)
 
-
-    nextQuestion: function () {
-
+    nextQuestion: function() {
         game.counter = 30;
         $('#counter').html(game.counter);
         game.currentQuestion++;
         game.loadQuestion();
     },
-
 
     // stop timer so it doesn't start going into negative
     // increase the amt of unanswered questions
@@ -133,8 +123,7 @@ var game = {
     // let user know what the correct answer was
     // if final question go to the results screen if not go to the end
 
-
-    timeUp: function () {
+    timeUp: function() {
         clearInterval(timer);
         game.unanswered ++;
         $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
@@ -146,29 +135,24 @@ var game = {
         }
     },
 
-
     // load after results after last question
     // clear timer
     // advise user they are done and what their score was
     // append button so user can restart game if they choose
 
-
-    results: function () {
+    results: function() {
         clearInterval(timer);
         $('#subwrapper').html('<h2>GAME OVER!</h2>');
         $('#subwrapper').append('<h3>Correct: ' + game.correct + '</h3>');
         $('#subwrapper').append('<h3>Incorrect: ' + game.incorrect + '</h3>');
         $('#subwrapper').append('<h3>Unanswered: ' + game.unanswered + '</h3>');
-        $('#subwrapper').append('<button class="btn btn-lg btn-default reset-button" id="reset">Restart Game</button>');
+        $('#subwrapper').append('<button class="btn btn-lg btn-success reset-button" id="reset">Restart Game</button>');
     },
-
 
     // clear interval / stop timer after button clicked
     // pass in what is being clicked, compare it to the correct answer and do something
 
-
     clicked: function(e) {
-
         clearInterval(timer);
         if($(e.target).data('name') == questions[game.currentQuestion].correctAnswer) {
             game.answeredCorrectly();
@@ -177,15 +161,13 @@ var game = {
         }
     },
 
-
     // test to make sure data was passed and comparison ok
     // clear timer
     // increase number of correct answers
     // advise user they got it correct (pause for a sec)
     // add something that either takes user to the results screen if game over or move to the next question
 
-
-    answeredCorrectly: function () {
+    answeredCorrectly: function() {
         console.log('YOU GOT IT!');
         clearInterval(timer);
         game.correct ++;
@@ -197,12 +179,10 @@ var game = {
         }
     },
 
-
     // can use the same logic as answered correctly just edit variable name and statement
     // let user know what the correct answer was (pause for a sec)
 
-
-    answeredIncorrectly: function () {
+    answeredIncorrectly: function() {
         console.log('WRONG!');
         clearInterval(timer);
         game.incorrect ++;
@@ -215,11 +195,9 @@ var game = {
         }
     },
 
-
     // set everything back to the original amounts when user restarts game
 
-
-    reset: function () {
+    reset: function() {
         game.currentQuestion = 0;
         game.counter = 0;
         game.correct = 0;
@@ -229,31 +207,4 @@ var game = {
     }
 };
 
-
-
-
-
-//
-// // //============= This works animating the background image but the image sliudes out of biew and doesnt com e back===============
-// speed in milliseconds
-// var scrollSpeed = 70;
-//
-// // set the default position
-// var current = 0;
-//
-// // set the direction
-// var direction = 'h';
-//
-// function bgscroll() {
-//
-//     // 1 pixel row at a time
-//     current -= 1;
-//
-//     // move the background with backgrond-position css properties
-//     $('.main-wrapper').css("backgroundPosition", (direction == 'h') ? current + "px 0" : "0 " + current + "px");
-//
-// }
-// //Calls the scrolling function repeatedly
-// setInterval("bgscroll()", scrollSpeed);
-// //============= This works animating the background image but the image sliudes out of biew and doesnt com e back===============
 
