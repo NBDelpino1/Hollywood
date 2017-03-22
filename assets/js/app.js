@@ -1,29 +1,38 @@
-// Start Button
+// =====================================================================
+// EVENT LISTENERS
+// =====================================================================
+
+// CLICKING THE START BUTTON KICKS OFF THE PROCESS
 
 $('#start').on('click', function() {
-    // Remove start button when game starts
+
     $('#start').remove();
-    // load question after game starts
     game.loadQuestion();
+
 });
 
-// Check to see if answer user selected is correct or incorrect
-// Don't check answer button because it will dynamically loaded so wont exist initially on page, instead check the document
-// Pass the value of the button clicked through 'e'
+// THIS IS THE BUTTON THE USER CLICKS TO SELECT AN ANSWER. THE VALUE OF THE BUTTON IS PASSED THROUGH (e).
+// CLICKING THIS BUTTON INITIATES THE CHECK TO SEE IF THE USER ANSWER WAS CORRECT OR NOT
 
 $(document).on('click', '.answer-button', function(e) {
+
    game.clicked(e);
+
 });
 
-// reset game
+// CLICKING THE RESTART BUTTON WILL RESET THE GAME FROM SCRATCH
 
 $(document).on('click', '#reset', function() {
+
     game.reset();
+
 });
 
-// Game questions
+// =====================================================================
+// ARRAY HOLDING ALL THE QUESTIONS
+// =====================================================================
 
-var questions = [{
+var questionsList = [{
     question: 'Which island nation is popstar Rihanna from?',
     answers: ['Aruba', 'Barbados', 'Bahamas', 'Jamaica'],
     correctAnswer: 'Barbados'
@@ -62,149 +71,212 @@ var questions = [{
 }, {
     question: 'Which one of these beautiful ladies Leonardo Dicaprio HASN\'T dated?',
     answers: ['Miranda Kerr', 'Blake Lively', 'Gisele Bündchen', 'Bar Refaeli'],
-    correctAnswer: 'Gisele Bündchen'
+    correctAnswer: 'Gisele Bundchen'
 }];
 
-// Set up Game object
+// =====================================================================
+// OBJECT HOLDING THE MECHANICS OF THE GAME
+// =====================================================================
 
 var game = {
-    // list of game questions
-    questions:questions,
-    // to keep track of which question is on so I know the correct question is posted to the page
-    currentQuestion:0,
-    // game timer
-    counter:30,
-    // to keep track of how many correct answers
-    correct:0,
-    // to keep track of how many incorrect answers
-    incorrect:0,
-    // to keep track of unanswered questions
-    unanswered: 0,
-    // incharge of changing the timer
-    countdown: function() {
-        game.counter --;
-        $('#counter').html(game.counter);
-        if(game.counter <= 0) {
-            console.log('TIME UP!');
-            game.timeUp();
-        }
-    },
 
-    // set the timer to start decreasing as the question loads
-    // post current question to the page
+    // ==================================
+    // VALUES TO START WITH
+    // ==================================
+
+    // list of game questionsList
+    questions:questionsList,
+
+    // will be used for keeping track of which question is being asked
+    currentQuestion:0,
+
+    // will be used for keeping track of the time (user has 30 seconds)
+    clock:30,
+
+    // will keep track of the totalCorrectAnswers answers
+    totalCorrectAnswers:0,
+
+    // will keep track of the totalIncorrectAnswers answers
+    totalIncorrectAnswers:0,
+
+    // will keep track of the totalUnansweredQuestions questionsList
+    totalUnansweredQuestions: 0,
+
+    // ==================================
+    // FUNCTIONS
+    // ==================================
+
+    // START THE TIMER, LOAD THE QUESTION, GENERATE ANSWER BUTTONS
 
     loadQuestion: function() {
+
+        // set the clock
+        game.clock = 30;
+
+        // start decreasing time
         timer = setInterval(game.countdown,1000);
-        $('#subwrapper').html('<h2 class="timer">Time Remaining: <span id="counter">30</span><span> sec</span></h2>');
-        $('#subwrapper').append('<h3 class="question-text">' + questions[game.currentQuestion].question + '</h3>');
-        for(var i = 0; i < questions[game.currentQuestion].answers.length; i ++) {
-            $('#subwrapper').append('<a class="btn btn-lg btn-default answer-button" role="button" id="button-' + i + '" data-name="' + questions[game.currentQuestion].answers[i] + '">' + questions[game.currentQuestion].answers[i] + '</a>')
+
+        // inject the time into the html
+        $('#subwrapper').html('<h2 class="timer">Time Remaining: <span id="clock">30</span><span> sec</span></h2>');
+
+        // inject a question into the html
+        $('#subwrapper').append('<h3 class="question-text">' + questionsList[game.currentQuestion].question + '</h3>');
+
+        // loop through the possible answers for the present question and make a button for each one
+        // assign the button an id and data attribute so it can be distinguished
+        for(var i = 0; i < questionsList[game.currentQuestion].answers.length; i ++) {
+
+            $('#subwrapper').append('<a class="btn btn-lg btn-success answer-button" role="button" id="button-' +
+                i + '" data-name="' + questionsList[game.currentQuestion].answers[i] + '">' +
+                questionsList[game.currentQuestion].answers[i] + '</a>')
         }
+
+        // Give the timer a blinking effect to create urgency (non - critical)
         (function blink() {
-            $('.timer').fadeOut(515).fadeIn(515, blink);
+
+            $('.timer').fadeOut(500).fadeIn(500, blink);
+
         })();
+
     },
 
-    // set counter back to origin to there is a fresh 30 seconds to answer the new question
-    //update html with new time
-    // load next question (make sure not to load same question)
+    // HANDLE THE GAME'S TIMER
 
-    nextQuestion: function() {
-        game.counter = 30;
-        $('#counter').html(game.counter);
-        game.currentQuestion++;
-        game.loadQuestion();
+    countdown: function() {
+
+        game.clock --;
+
+        $('#clock').html(game.clock);
+
+        if(game.clock <= 0) {
+
+            // console.log('TIME UP!');
+            game.timeUp();
+
+        }
     },
 
-    // stop timer so it doesn't start going into negative
-    // increase the amt of unanswered questions
-    // alert user that they have run out of time
-    // let user know what the correct answer was
-    // if final question go to the results screen if not go to the end
+    // AFTER USER SELECTS AN ANSWER, CHECK TO SEE IF THE ANSWER IS CORRECT OR NOT, (e) REPRESENTS WHAT THE ANSWER THE USER SELECTED
+
+    clicked: function(e) {
+
+        // clearInterval(timer);
+
+        if($(e.target).data('name') == questionsList[game.currentQuestion].correctAnswer) {
+
+            game.answeredCorrectly();
+
+        } else {
+
+            game.answeredIncorrectly();
+
+        }
+
+    },
+
+    // IF THE ANSWER WAS CORRECT - INCREASE THEIR CORRECT TOTAL AND LET THEM KNOW THEY WERE CORRECT VIA A MESSAGE
+    // THEN CHECK TO SEE IF THERE ARE ANY MORE QUESTIONS, PAUSE FOR 1.5 SECS, IF NONE THEN SHOW THE USER THE RESULTS OTHERWISE LOAD THE NEXT QUESTION
+
+    answeredCorrectly: function() {
+
+        // console.log('YOU GOT IT!');
+
+        game.totalCorrectAnswers ++;
+
+        $('#subwrapper').html('<span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h2>YOU GOT IT CORRECT!</h2>');
+
+        if(game.currentQuestion == questionsList.length -1) {
+
+            setTimeout(game.results, 1 * 1500);
+
+        } else {
+
+            setTimeout(game.nextQuestion, 1 * 1500)
+
+        }
+
+    },
+
+    // IF THE ANSWER WAS INCORRECT - INCREASE THEIR INCORRECT TOTAL AND LET THEM KNOW THEY WERE INCORRECT AND WHAT THE CORRECT ANSWER WAS VIA A MESSAGE
+    // THEN CHECK TO SEE IF THERE ARE ANY MORE QUESTIONS, PAUSE FOR 1.5 SECS, IF NONE THEN SHOW THE USER THE RESULTS OTHERWISE LOAD THE NEXT QUESTION
+
+    answeredIncorrectly: function() {
+
+        // console.log('WRONG!');
+
+        game.totalIncorrectAnswers ++;
+
+        $('#subwrapper').html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span><h2>OOPS INCORRECT</h2>');
+        $('#subwrapper').append('<h3>Correct answer was: ' + questionsList[game.currentQuestion].correctAnswer + '</h3>');
+
+        if(game.currentQuestion == questionsList.length -1) {
+
+            setTimeout(game.results, 1 * 1500);
+
+        } else {
+
+            setTimeout(game.nextQuestion, 1 * 1500)
+
+        }
+
+    },
+
+    // IF THE USER RUNS OUT OF TIME (DID NOT ANSWER QUESTION) - INCREASE THEIR UNANSWERED TOTAL AND LET THEM KNOW THEY ARE OUT OF TIME AND WHAT THE CORRECT ANSWER WAS
+    // THEN CHECK TO SEE IF THERE ARE ANY MORE QUESTIONS, PAUSE FOR 1.5 SECS, IF NONE THEN SHOW THE USER THE RESULTS OTHERWISE LOAD THE NEXT QUESTION
 
     timeUp: function() {
         clearInterval(timer);
-        game.unanswered ++;
+        game.totalUnansweredQuestions ++;
         $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
-        $('#subwrapper').append('<h3>Correct answer was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
-        if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 1 * 1000);
+        $('#subwrapper').append('<h3>Correct answer was: ' + questionsList[game.currentQuestion].correctAnswer + '</h3>');
+        if(game.currentQuestion == questionsList.length -1) {
+
+            setTimeout(game.results, 1 * 1500);
+
         } else {
-            setTimeout(game.nextQuestion, 1 * 1000);
+
+            setTimeout(game.nextQuestion, 1 * 1500);
+
         }
     },
 
-    // load after results after last question
-    // clear timer
-    // advise user they are done and what their score was
-    // append button so user can restart game if they choose
+    // LOAD THE NEXT QUESTION, MAKE SURE AND MOVE UP ONE SO THE SAME QUESTION ISN'T ASKED A SECOND TIME
+
+    nextQuestion: function() {
+
+        clearInterval(timer);
+        game.currentQuestion++;
+        game.loadQuestion();
+
+    },
+
+    // AFTER ALL THE QUESTIONS HAVE BEEN ASKED DISPLAY THE RESULTS TO THE USER
+    // THE USER IS ALSO PRESENTED WITH A BUTTON THEY CAN CLICK TO RESTART THE GAME OF THEY CHOOSE
 
     results: function() {
+
         clearInterval(timer);
         $('#subwrapper').html('<h2>GAME OVER!</h2>');
-        $('#subwrapper').append('<h3>Correct: ' + game.correct + '</h3>');
-        $('#subwrapper').append('<h3>Incorrect: ' + game.incorrect + '</h3>');
-        $('#subwrapper').append('<h3>Unanswered: ' + game.unanswered + '</h3>');
-        $('#subwrapper').append('<a class="btn btn-lg btn-default reset-button" role="button" id="reset">Restart Game</a>');
+        $('#subwrapper').append('<h3>Correct: ' + game.totalCorrectAnswers + '</h3>');
+        $('#subwrapper').append('<h3>Incorrect: ' + game.totalIncorrectAnswers + '</h3>');
+        $('#subwrapper').append('<h3>Unanswered: ' + game.totalUnansweredQuestions + '</h3>');
+        $('#subwrapper').append('<a class="btn btn-lg btn-success reset-button" role="button" id="reset">Restart Game</a>');
+
     },
 
-    // clear interval / stop timer after button clicked
-    // pass in what is being clicked, compare it to the correct answer and do something
-
-    clicked: function(e) {
-        clearInterval(timer);
-        if($(e.target).data('name') == questions[game.currentQuestion].correctAnswer) {
-            game.answeredCorrectly();
-        } else {
-            game.answeredIncorrectly();
-        }
-    },
-
-    // test to make sure data was passed and comparison ok
-    // clear timer
-    // increase number of correct answers
-    // advise user they got it correct (pause for a sec)
-    // add something that either takes user to the results screen if game over or move to the next question
-
-    answeredCorrectly: function() {
-        console.log('YOU GOT IT!');
-        clearInterval(timer);
-        game.correct ++;
-        $('#subwrapper').html('<span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h2>YOU GOT IT CORRECT!</h2>');
-        if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 1 * 1500);
-        } else {
-            setTimeout(game.nextQuestion, 1 * 1500)
-        }
-    },
-
-    // can use the same logic as answered correctly just edit variable name and statement
-    // let user know what the correct answer was (pause for a sec)
-
-    answeredIncorrectly: function() {
-        console.log('WRONG!');
-        clearInterval(timer);
-        game.incorrect ++;
-        $('#subwrapper').html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span><h2>OOPS INCORRECT</h2>');
-        $('#subwrapper').append('<h3>Correct answer was: ' + questions[game.currentQuestion].correctAnswer + '</h3>');
-
-        if(game.currentQuestion == questions.length -1) {
-            setTimeout(game.results, 1 * 1500);
-        } else {
-            setTimeout(game.nextQuestion, 1 * 1500)
-        }
-    },
-
-    // set everything back to the original amounts when user restarts game
+    // RESET THE GAME FROM SCRATCH AND START LOADING THE QUESTIONS ALL OVER AGAIN
 
     reset: function() {
+
         game.currentQuestion = 0;
-        game.counter = 0;
-        game.correct = 0;
-        game.incorrect = 0;
-        game.unanswered = 0;
+        game.clock = 0;
+        game.totalCorrectAnswers = 0;
+        game.totalIncorrectAnswers = 0;
+        game.totalUnansweredQuestions = 0;
         game.loadQuestion();
+
     }
+
 };
 
 
