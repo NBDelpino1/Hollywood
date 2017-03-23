@@ -117,7 +117,7 @@ var game = {
         timer = setInterval(game.countdown,1000);
 
         // inject the time into the html
-        $('#subwrapper').html('<h2 class="timer">Time Remaining: <span id="clock">30</span><span> sec</span></h2>');
+        $('#subwrapper').html('<h4 class="timer">Time Remaining: <span id="clock">30</span><span> sec</span></h4>');
 
         // inject a question into the html
         $('#subwrapper').append('<h3 class="question-text">' + questionsList[game.currentQuestion].question + '</h3>');

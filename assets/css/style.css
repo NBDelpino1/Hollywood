@@ -7,7 +7,7 @@ body {
 }
 
 /* game text name */
-h1 {
+h1,h2 {
     color: #cecdcd;
 }
 
@@ -15,7 +15,7 @@ h1 {
 .main-wrapper {
     background:
             linear-gradient(
-                    rgba(205, 220, 57, 1),
+                    rgba(205, 220, 57, .95),
                     rgba(0, 0, 0, 0.96)
             ),
             url(../images/page-bg.jpg) no-repeat center center scroll;
@@ -84,6 +84,8 @@ h1 {
     font-size:50px;
     color: #f44336;
 }
+
+
 
 
 
