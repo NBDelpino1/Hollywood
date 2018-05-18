@@ -1,0 +1,93 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    color: #fff;
+}
+
+/* game text name */
+h1,h2 {
+    color: #cecdcd;
+}
+
+/* set background image and tint */
+.main-wrapper {
+    background:
+            linear-gradient(
+                    rgba(205, 220, 57, .95),
+                    rgba(0, 0, 0, 0.96)
+            ),
+            url(../images/page-bg.jpg) no-repeat center center scroll;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height:100%;
+}
+
+/* center content on home page */
+.sub-wrapper {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    width: 100%;
+}
+
+/* button that kicks off the game */
+.start-button {
+    width:175px;
+    height:50px;
+    margin:5px;
+    border-radius:0;
+    font-size:14px;
+    line-height:25px;
+    color: #fff;
+}
+
+/* button user clicks to select an answer */
+.answer-button {
+    margin:5px;
+    width:220px;
+    border-radius:0;
+    color: #fff;
+    font-weight:300;
+    letter-spacing:-1px;
+    line-height:41px;
+}
+
+/* button that restarts the game */
+.reset-button {
+    width:175px;
+    height:50px;
+    margin:5px;
+    border-radius:0;
+    font-size:14px;
+    line-height:25px;
+}
+
+/* styling for question text */
+.question-text {
+    margin-top:40px;
+    margin-bottom:40px;
+}
+
+/* check displays if user got the answer correct */
+.glyphicon-ok {
+    font-size:50px;
+    color: #8bc34a;
+}
+
+/* x displays if user got the answer correct */
+.glyphicon-remove {
+    font-size:50px;
+    color: #f44336;
+}
+
+
+
+
+
+
+

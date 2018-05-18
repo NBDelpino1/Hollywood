@@ -1,142 +1,30 @@
-// =====================================================================
-// EVENT LISTENERS
-// =====================================================================
-
-// CLICKING THE START BUTTON KICKS OFF THE PROCESS
-
-$('#start').on('click', function() {
-
-    $('#start').remove();
-    game.loadQuestion();
-
-});
-
-// THIS IS THE BUTTON THE USER CLICKS TO SELECT AN ANSWER. THE VALUE OF THE BUTTON IS PASSED THROUGH (e).
-// CLICKING THIS BUTTON INITIATES THE CHECK TO SEE IF THE USER ANSWER WAS CORRECT OR NOT
-
-$(document).on('click', '.answer-button', function(e) {
-
-   game.clicked(e);
-
-});
-
-// CLICKING THE RESTART BUTTON WILL RESET THE GAME FROM SCRATCH
-
-$(document).on('click', '#reset', function() {
-
-    game.reset();
-
-});
-
-// =====================================================================
-// ARRAY HOLDING ALL THE QUESTIONS
-// =====================================================================
-
-var questionsList = [{
-    question: 'Which island nation is popstar Rihanna from?',
-    answers: ['Aruba', 'Barbados', 'Bahamas', 'Jamaica'],
-    correctAnswer: 'Barbados'
-}, {
-    question: 'What is Natalie Portman\'s actual last name?',
-    answers: ['Hershlag', 'Douglas', 'Horowitz', 'Portman'],
-    correctAnswer: 'Hershlag'
-}, {
-    question: 'In what year did Angelina Jolie and Brad Pitt get together?',
-    answers: ['2004', '2005', '2006', '2007'],
-    correctAnswer: '2005'
-}, {
-    question: 'Who was the first person to have a No. 1 album and a No. 1 film in the same week?',
-    answers: ['Beyoncé', 'Will Smith', 'Jennifer Lopez', 'Justin Timberlake'],
-    correctAnswer: 'Jennifer Lopez'
-}, {
-    question: 'Which NBA star did actor Gabrielle Union marry?',
-    answers: ['Dwyane Wade', 'LeBron James', 'Kobe Bryant', 'Chris Bosh'],
-    correctAnswer: 'Dwyane Wade'
-}, {
-    question: 'Who\'s the youngest Kardashian?',
-    answers: ['Kendall', 'Khloe', 'Kylie', 'Rob'],
-    correctAnswer: 'Rob'
-}, {
-    question: 'Katy Perry is a California girl. But do you know WHICH city she\'s from?',
-    answers: ['Santa Barbara', 'Santa Cruz', 'San Francisco', 'Los Angeles'],
-    correctAnswer: 'Santa Barbara'
-}, {
-    question: 'Meryl Streep, Shaquille O\'Neal, and Whitney Houston are all from which state?',
-    answers: ['Indiana', 'New York', 'California', 'New Jersey'],
-    correctAnswer: 'New Jersey'
-}, {
-    question: 'Do you know which child star Mila Kunis dated for eight years?',
-    answers: ['Ben Savage', 'Jonathan Lipnicki', 'Macaulay Culkin', 'Jonathan Lipnicki'],
-    correctAnswer: 'Macaulay Culkin'
-}, {
-    question: 'Which one of these beautiful ladies Leonardo Dicaprio HASN\'T dated?',
-    answers: ['Miranda Kerr', 'Blake Lively', 'Gisele Bündchen', 'Bar Refaeli'],
-    correctAnswer: 'Gisele Bundchen'
-}];
-
-// =====================================================================
-// OBJECT HOLDING THE MECHANICS OF THE GAME
-// =====================================================================
-
 var game = {
 
-    // ==================================
-    // VALUES TO START WITH
-    // ==================================
-
-    // list of game questionsList
-    questions:questionsList,
-
-    // will be used for keeping track of which question is being asked
-    currentQuestion:0,
-
-    // will be used for keeping track of the time (user has 30 seconds)
-    clock:30,
-
-    // will keep track of the totalCorrectAnswers answers
-    totalCorrectAnswers:0,
-
-    // will keep track of the totalIncorrectAnswers answers
-    totalIncorrectAnswers:0,
-
-    // will keep track of the totalUnansweredQuestions questionsList
+    questions: questionsList,
+    currentQuestion: 0,
+    clock: 30,
+    totalCorrectAnswers: 0,
+    totalIncorrectAnswers: 0,
     totalUnansweredQuestions: 0,
 
-    // ==================================
-    // FUNCTIONS
-    // ==================================
-
-    // START THE TIMER, LOAD THE QUESTION, GENERATE ANSWER BUTTONS
 
     loadQuestion: function() {
 
-        // set the clock
         game.clock = 30;
+        timer = setInterval(game.countdown, 1000);
+        $('body').html('<div class="main-wrapper"><ul class="nav justify-content-center"><li class="nav-item"><a class="nav-link disabled timer" href="#"><span id="clock">30</span><span></span></a></li></ul><div class="sub-wrapper text-center" id="subwrapper"><div class="container text-center questions-container"><div class="row text-center answers-container"></div></div></div></div>');
+        $('.questions-container').prepend('<h2 class="question-text">' + questionsList[game.currentQuestion].question + '</h2>');
 
-        // start decreasing time
-        timer = setInterval(game.countdown,1000);
+        // LOOP THROUGH QUESTIONS, MAKE BUTTONS AND APPEND TEXT
+        for (var i = 0; i < questionsList[game.currentQuestion].answers.length; i++) {
 
-        // inject the time into the html
-        $('#subwrapper').html('<h4 class="timer">Time Remaining: <span id="clock">30</span><span> sec</span></h4>');
 
-        // inject a question into the html
-        $('#subwrapper').append('<h3 class="question-text">' + questionsList[game.currentQuestion].question + '</h3>');
+            $('.answers-container').append(
+                '<div class="col-sm"><button class="btn btn-outline-light answer-button" role="button" id="button-' + i + '" data-name="' + questionsList[game.currentQuestion].answers[i] + '">' + questionsList[game.currentQuestion].answers[i] + '</button></div>'
 
-        // loop through the possible answers for the present question and make a button for each one
-        // assign the button an id and data attribute so it can be distinguished
-        for(var i = 0; i < questionsList[game.currentQuestion].answers.length; i ++) {
+            );
 
-            $('#subwrapper').append('<a class="btn btn-lg btn-success answer-button" role="button" id="button-' +
-                i + '" data-name="' + questionsList[game.currentQuestion].answers[i] + '">' +
-                questionsList[game.currentQuestion].answers[i] + '</a>')
         }
-
-        // Give the timer a blinking effect to create urgency (non - critical)
-        (function blink() {
-
-            $('.timer').fadeOut(500).fadeIn(500, blink);
-
-        })();
 
     },
 
@@ -144,13 +32,11 @@ var game = {
 
     countdown: function() {
 
-        game.clock --;
-
+        game.clock--;
         $('#clock').html(game.clock);
 
-        if(game.clock <= 0) {
+        if (game.clock <= 0) {
 
-            // console.log('TIME UP!');
             game.timeUp();
 
         }
@@ -160,9 +46,7 @@ var game = {
 
     clicked: function(e) {
 
-        // clearInterval(timer);
-
-        if($(e.target).data('name') == questionsList[game.currentQuestion].correctAnswer) {
+        if ($(e.target).data('name') == questionsList[game.currentQuestion].correctAnswer) {
 
             game.answeredCorrectly();
 
@@ -179,13 +63,11 @@ var game = {
 
     answeredCorrectly: function() {
 
-        // console.log('YOU GOT IT!');
+        game.totalCorrectAnswers++;
+        $('body').html('<div class="main-wrapper"><div class="sub-wrapper text-center" id="subwrapper"></div></div>');
+        $('.sub-wrapper').append('<img src="assets/img/correct-face.svg" class="face">').append('<h2 class="result-text">"Correct!"</h2><br>');
 
-        game.totalCorrectAnswers ++;
-
-        $('#subwrapper').html('<span class="glyphicon glyphicon-ok" aria-hidden="true"></span><h2>YOU GOT IT CORRECT!</h2>');
-
-        if(game.currentQuestion == questionsList.length -1) {
+        if (game.currentQuestion == questionsList.length - 1) {
 
             setTimeout(game.results, 1 * 1500);
 
@@ -202,14 +84,11 @@ var game = {
 
     answeredIncorrectly: function() {
 
-        // console.log('WRONG!');
+        game.totalIncorrectAnswers++;
+        $('body').html('<div class="main-wrapper"><div class="sub-wrapper text-center" id="subwrapper"></div></div>');
+        $('.sub-wrapper').append('<img src="assets/img/incorrect-face.svg" class="face">').append('<div class="container"><h2 class="result-text">The correct answer is <span class="result-text-black"> " ' + questionsList[game.currentQuestion].correctAnswer + ' "</span></h2></div>');
 
-        game.totalIncorrectAnswers ++;
-
-        $('#subwrapper').html('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span><h2>OOPS INCORRECT</h2>');
-        $('#subwrapper').append('<h3>Correct answer was: ' + questionsList[game.currentQuestion].correctAnswer + '</h3>');
-
-        if(game.currentQuestion == questionsList.length -1) {
+        if (game.currentQuestion == questionsList.length - 1) {
 
             setTimeout(game.results, 1 * 1500);
 
@@ -226,10 +105,11 @@ var game = {
 
     timeUp: function() {
         clearInterval(timer);
-        game.totalUnansweredQuestions ++;
-        $('#subwrapper').html('<h2>OUT OF TIME!</h2>');
-        $('#subwrapper').append('<h3>Correct answer was: ' + questionsList[game.currentQuestion].correctAnswer + '</h3>');
-        if(game.currentQuestion == questionsList.length -1) {
+        game.totalUnansweredQuestions++;
+        $('body').html('<div class="main-wrapper"><div class="sub-wrapper text-center" id="subwrapper"></div></div>');
+        $('.sub-wrapper').append('<h1>Out of time!</h1>').append('<h2 class="result-text">The correct answer is " ' + questionsList[game.currentQuestion].correctAnswer + ' "</h2>');
+
+        if (game.currentQuestion == questionsList.length - 1) {
 
             setTimeout(game.results, 1 * 1500);
 
@@ -256,12 +136,11 @@ var game = {
     results: function() {
 
         clearInterval(timer);
-        $('#subwrapper').html('<h2>GAME OVER!</h2>');
-        $('#subwrapper').append('<h3>Correct: ' + game.totalCorrectAnswers + '</h3>');
-        $('#subwrapper').append('<h3>Incorrect: ' + game.totalIncorrectAnswers + '</h3>');
-        $('#subwrapper').append('<h3>Unanswered: ' + game.totalUnansweredQuestions + '</h3>');
-        $('#subwrapper').append('<a class="btn btn-lg btn-success reset-button" role="button" id="reset">Restart Game</a>');
 
+        $('body').html('<div class="main-wrapper"><div class="sub-wrapper text-center" id="subwrapper"></div></div>');
+
+        $('.sub-wrapper').append('<img src="assets/img/incorrect-face.svg" class="face">').append('<h2 class="end-text">"All Done!"</h2>')
+            .append('<br><h4>Correct: ' + game.totalCorrectAnswers + '</h4>').append('<h4>Incorrect: ' + game.totalIncorrectAnswers + '</h4>').append('<h4>Unanswered: ' + game.totalUnansweredQuestions + '</h4>').append('<a class="btn btn-outline-light start-button" role="button" id="reset"><img src="assets/img/arrow-reload.svg" class="icons"></a>');
     },
 
     // RESET THE GAME FROM SCRATCH AND START LOADING THE QUESTIONS ALL OVER AGAIN
@@ -274,9 +153,124 @@ var game = {
         game.totalIncorrectAnswers = 0;
         game.totalUnansweredQuestions = 0;
         game.loadQuestion();
-
     }
 
 };
 
+var questionsList = [{
+    question: '1. What does the aesthetic-usability effect refer to?',
+    answers: [
+        'People tend to perceive usable products as more attractive',
+        'People tend to perceive attractive products as more usable',
+        'Usability and aesthetics are equally important in web design',
+        'The perception of attractiveness and usability of a new site are evaluated in the first 50ms when a user first sees the site'
+    ],
+    correctAnswer: 'People tend to perceive attractive products as more usable'
+}, {
+    question: '2. Which of the following is NOT a type of microcontent?',
+    answers: [
+        'Page title',
+        'Headline',
+        'Tagline',
+        'Email body'
+    ],
+    correctAnswer: 'Email body'
+}, {
+    question: '3. Which of the following best describes the false-consensus effect?',
+    answers: [
+        'People tend to assume that others share their beliefs and responses to a given situation',
+        'Designers think that their favorite web-design patterns are more widespread than they are in reality',
+        'People assume that their needs are unique most of the time, and that only in exceptional situations they will react in the same way as others',
+        'Members of a team tend to act cohesively to give outsiders the illusion of consensus'
+    ],
+    correctAnswer: 'People tend to assume that others share their beliefs and responses to a given situation'
+}, {
+    question: '4. What is a difference between a customer-journey map and an experience map?',
+    answers: [
+        'The customer-journey map is focused on customers, while the experience map is focused on employees',
+        'The customer-journey map depicts events in chronological order, but the experience map is not chronological or sequential',
+        'The experience map is agnostic of any specific products, while the customer-journey map is tied to a specific product or service',
+        'The customer-journey map offers a general human perspective, not specific to a particular user'
+    ],
+    correctAnswer: 'The experience map is agnostic of any specific products, while the customer-journey map is tied to a specific product or service'
+}, {
+    question: '5. Which of the following best describes the exhaustive-review eye-movement pattern?',
+    answers: [
+        'The eyes are repeatedly drawn to the top left corner of the webpage because the user wants to make sure that the page belongs to the right site',
+        'The eyes are drawn to the same area of the page repeatedly because the UI violates user’s expectations',
+        'The eyes systematically visit all the areas of the page in an effort not to miss anything',
+        'The eyes thoroughly scan the area of the page that has the most content'
+    ],
+    correctAnswer: 'The eyes are drawn to the same area of the page repeatedly because the UI violates user’s expectations'
+}, {
+    question: '6. Which of the following does NOT usually appear in a service blueprint?',
+    answers: [
+        'Customer emotions',
+        'Customer actions',
+        'Processes',
+        'Backstage actions'
+    ],
+    correctAnswer: 'Customer emotions'
+}, {
+    question: '7. Which of the following is true of quantitative research?',
+    answers: [
+        'It typically requires just 5 users',
+        'It is used mostly for formative purposes, in the early stages of a design to inform design decisions',
+        'It produces statistically meaningful results that are likely to be replicated in a different study',
+        'It allows for flexible study conditions that can be adjusted from session to session according to the team’s needs'
+    ],
+    correctAnswer: 'It produces statistically meaningful results that are likely to be replicated in a different study'
+}, {
+    question: '8. Which part of a webpage receives most of the users’ fixations?',
+    answers: [
+        'Left half of the page',
+        'Right half of the page',
+        'Both sides of the page receive about an equal proportion of fixations',
+        'It depends on the page level in the site’s IA hierarchy'
+    ],
+    correctAnswer: 'Left half of the page'
+}, {
+    question: 'What is one advantage of sliders for application design?',
+    answers: [
+        'They represent a more fun and engaging input method compared with other UI controls',
+        'They allow users to explore the effect of the control for the whole range of the associated parameter',
+        'They support precise selection of a specific value within a range',
+        'They allow both fine and coarse parameter adjustment'
+    ],
+    correctAnswer: 'They allow users to explore the effect of the control for the whole range of the associated parameter'
+}, {
+    question: 'Which of the following is true of tree testing?',
+    answers: [
+        'It should be done before card sorting when both card sorting and tree testing are used',
+        'It does not typically collect any quantitative measures',
+        'It is devoid of any visual styling and does not reflect well the experience of interacting with the full design',
+        'It can be used interchangeably with card sorting'
+    ],
+    correctAnswer: 'It is devoid of any visual styling and does not reflect well the experience of interacting with the full design'
+}];
 
+
+// ONLICK TO START GAME
+$('#start').on('click', function() {
+
+    $('#start').remove();
+    game.loadQuestion();
+
+});
+
+// ONCLICK TO RESET GAME
+
+$(document).on('click', '#reset', function() {
+
+    game.reset();
+
+});
+
+// THIS IS THE BUTTON THE USER CLICKS TO SELECT AN ANSWER. THE VALUE OF THE BUTTON IS PASSED THROUGH (e).
+// CLICKING THIS BUTTON INITIATES THE CHECK TO SEE IF THE USER ANSWER WAS CORRECT OR NOT
+
+$(document).on('click', '.answer-button', function(e) {
+
+    game.clicked(e);
+
+});
